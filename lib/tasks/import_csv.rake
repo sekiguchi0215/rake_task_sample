@@ -13,7 +13,9 @@ namespace :import_csv do
     end
     puts "インポート処理を開始"
     begin
-      User.create!(list)
+      User.transaction do
+        User.create!(list)
+      end
       puts "インポート完了!!"
     rescue StandardError => e
       puts "#{e.class}: #{e.message}"
